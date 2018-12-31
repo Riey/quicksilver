@@ -23,6 +23,8 @@ pub enum Event {
     Focused,
     /// The application has lost focus
     Unfocused,
+    /// A unicode char has been received
+    RecvChar(char),
     /// A key has changed its button state
     Key(Key, ButtonState),
     /// The mouse has been moved to a position
@@ -65,6 +67,9 @@ impl EventProvider {
                 glutin::WindowEvent::CloseRequested => {
                     running = false;
                     events.push(Event::Closed);
+                }
+                glutin::WindowEvent::ReceivedCharacter(ch) => {
+                    events.push(Event::RecvChar(ch));
                 }
                 glutin::WindowEvent::KeyboardInput { input: event, .. } => {
                     if let Some(keycode) = event.virtual_keycode {

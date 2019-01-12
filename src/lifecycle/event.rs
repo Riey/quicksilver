@@ -78,9 +78,7 @@ impl EventProvider {
                         events.push(Event::Key(key, state));
                     }
                 }
-                glutin::WindowEvent::ReceivedCharacter(character) if character.is_alphanumeric() => {
-                    events.push(Event::Typed(character));
-                }
+                glutin::WindowEvent::ReceivedCharacter(character) => events.push(Event::Typed(character)),
                 glutin::WindowEvent::CursorMoved { position, .. } => {
                     let position: Vector = position.into();
                     let position = window.project() * (position - window.screen_offset());
